@@ -1,0 +1,81 @@
+clc
+clear
+close all
+%%
+[RTplanFileName,RTplanPathName,RTplanFilterIndex] = uigetfile('*.dcm','Select RTplan dicom file')
+dicomInformation = dicominfo(fullfile(RTplanPathName,RTplanFileName));
+
+nameOfBeamSequence = fieldnames(dicomInformation.BeamSequence)
+numberOfBeamSequence = size(nameOfBeamSequence,1);
+doseRate= zeros(numberOfBeamSequence,1);
+gantryRotation= zeros(numberOfBeamSequence,1);
+collimatorRotation= zeros(numberOfBeamSequence,1);
+x1JawPosition = zeros(numberOfBeamSequence,1);
+x2JawPositoin = zeros(numberOfBeamSequence,1);
+y1JawPosition = zeros(numberOfBeamSequence,1);
+y2JawPositoin = zeros(numberOfBeamSequence,1);
+MLCPosition = zeros(numberOfBeamSequence,120);
+for iter1 = 1: numberOfBeamSequence
+    BeamNumber = getfield(dicomInformation,'BeamSequence',nameOfBeamSequence{iter1},'BeamNumber');
+    NumberOfWedges = getfield(dicomInformation,'BeamSequence',nameOfBeamSequence{iter1},'NumberOfWedges');
+    NumberOfCompensators = getfield(dicomInformation,'BeamSequence',nameOfBeamSequence{iter1},'NumberOfCompensators');
+    NumberOfBoli = getfield(dicomInformation,'BeamSequence',nameOfBeamSequence{iter1},'NumberOfBoli');
+    NumberOfBlocks = getfield(dicomInformation,'BeamSequence',nameOfBeamSequence{iter1},'NumberOfBlocks');
+    ControlPointSequence = getfield(dicomInformation,'BeamSequence',nameOfBeamSequence{iter1},'ControlPointSequence');
+    fieldnameOfControlPointSequence = fieldnames(ControlPointSequence);
+    Flag_ControlPointSequence = true;
+    for iter2 = 1: size(fieldnameOfControlPointSequence,1)
+        ControlPointSequnce_Item = getfield(ControlPointSequence,fieldnameOfControlPointSequence{iter2})
+        if isfield(ControlPointSequnce_Item,'GantryAngle')
+            gantryRotation(iter2,1) = getfield(ControlPointSequnce_Item,'GantryAngle')
+        end
+        %
+        if isfield(ControlPointSequnce_Item,'BeamLimitingDeviceAngle')
+           collimatorRotation(iter2,1) =  getfield(ControlPointSequnce_Item,'BeamLimitingDeviceAngle') 
+        end
+        
+        if isfield(ControlPointSequnce_Item,'DoseRateSet')
+           DoseRateSet(iter2,1) =  getfield(ControlPointSequnce_Item,'DoseRateSet') 
+        end
+        %
+        BeamLimitingDevicePositionSequence = getfield(ControlPointSequnce_Item,'BeamLimitingDevicePositionSequence')
+        fieldnameBeamLimitingDevicePositionSequence = fieldnames(BeamLimitingDevicePositionSequence)
+        for iter3 = 1: size(fieldnameBeamLimitingDevicePositionSequence)
+            DeviceType = getfield(BeamLimitingDevicePositionSequence,fieldnameBeamLimitingDevicePositionSequence{iter2},'RTBeamLimitingDeviceType')
+            if (strcmp(DeviceType,'ASYMX')
+                
+            elseif
+                
+                en
+            
+        end
+        
+        
+        
+        
+%         ControlIndex = getfield(ControlPointSequence,fieldnameOfControlPointSequence{iter2},'ControlPointIndex')
+%         GantryAngle = getfield(ControlPointSequence,fieldnameOfControlPointSequence{iter2},'GantryAngle')
+%         CumulativeMetersetWeight = getfield(ControlPointSequence,fieldnameOfControlPointSequence{iter2},'CumulativeMetersetWeight') 
+%         CollimatorAngle = getfield(ControlPointSequence,fieldnameOfControlPointSequence{iter2},'BeamLimitingDeviceAngle')
+%         BeamLimitingDeviceSquence = getfield(ControlPointSequence,fieldnameOfControlPointSequence{iter2},'BeamLimitingDevicePositionSequence')
+%         fieldnamesBeamLimitingDeviceSquence = fieldnames(BeamLimitingDeviceSquence)
+%         for iter3 = 1: size(fieldnamesBeamLimitingDeviceSquence,1)
+%             
+%             
+%         end
+%         
+%         XJawPositions = getfield(ControlPointSequence,fieldnameOfControlPointSequence{iter2},'BeamLimitingDevicePositionSequence','Item_1','LeafJawPositions')
+%         x1JawPosition = XJawPositions(1)
+%         x2JawPosition = XJawPositions(2)
+%         YJawPositions = getfield(ControlPointSequence,fieldnameOfControlPointSequence{iter2},'BeamLimitingDevicePositionSequence','Item_2','LeafJawPositions')
+%         y1JawPosition = YJawPositions(1)
+%         y2JawPosition = YJawPositions(2)
+%         MLCPositions = getfield(ControlPointSequence,fieldnameOfControlPointSequence{iter2},'BeamLimitingDevicePositionSequence','Item_3','LeafJawPositions')
+        
+    end
+    
+end
+
+
+
+

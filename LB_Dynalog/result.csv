@@ -1,0 +1,5 @@
+
+Dynalog Analysis
+Number of File-pairs analysed: 1 
+Bank A Filename,Bank B Filename,File Date,File Time, Treatment Time (s),Num. Beam Hold Offs,Bank A RMS Error (mm),Bank B RMS Error (mm) ,Gap RMS Error (mm),Bank A Fails,Bank B Fails,Gap Fails,Total Observations,Observations < 1mm ,Observations < 2mm, 
+A20170615085606_RT02473.dlg,B20170615085606_RT02473.dlg,26-6-2017, 13:57:43,79.550000,0,0.352976,0.397774,0.486818,0,0,0,47490,1.029627e+02,1.066667e+02, 
